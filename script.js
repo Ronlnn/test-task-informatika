@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   const container = document.getElementById('hexagon-container');
+  const opponent1 = document.getElementById('opponent1');
+  const opponent2 = document.getElementById('opponent2');
 
   const gridPositions = [
     { column: 2, row: 5 },
@@ -11,11 +13,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let activeIndex = 2; // Центральный гексагон
   const events = [
-    { date: '30', month: 'МАЯ', details: 'Ак Барс Арена', time: '20:00' },
-    { date: '17', month: 'ИЮНЯ', details: 'Рубин Стадион', time: '21:00' },
-    { date: '26', month: 'ИЮНЯ', details: 'Стадион', time: '19:00' },
-    { date: '16', month: 'ИЮЛЯ', details: 'Ипподром', time: '13:00' },
-    { date: '30', month: 'СЕНТЯБРЯ', details: 'Ак Барс', time: '15:00' },
+    {
+      date: '30',
+      month: 'МАЯ',
+      details: 'Ак Барс Арена',
+      time: '20:00',
+      opponents: ['ЦСКА', 'Зенит'],
+    },
+    {
+      date: '17',
+      month: 'ИЮНЯ',
+      details: 'Рубин Стадион',
+      time: '21:00',
+      opponents: ['Рубин', 'Шахтерск'],
+    },
+    {
+      date: '26',
+      month: 'ИЮНЯ',
+      details: 'Стадион',
+      time: '19:00',
+      opponents: ['Реал Мадрид', 'Барселона'],
+    },
+    {
+      date: '16',
+      month: 'ИЮЛЯ',
+      details: 'Ипподром',
+      time: '13:00',
+      opponents: ['Черный', 'Белый'],
+    },
+    {
+      date: '30',
+      month: 'СЕНТЯБРЯ',
+      details: 'Ак Барс',
+      time: '15:00',
+      opponents: ['Ак Барс', 'СКА'],
+    },
   ];
 
   // Рендеринг гексагонов
@@ -31,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
       hexagon.style.gridColumn = position.column;
       hexagon.style.gridRow = position.row;
 
-
       if (index === activeIndex) {
         hexagon.classList.add('active');
         hexagon.innerHTML = `
@@ -40,6 +71,9 @@ document.addEventListener('DOMContentLoaded', function () {
           <div>${event.time}</div>
           <button class="hexagon-button">Купить билет</button>
         `;
+        // Обновляем соперников
+        opponent1.textContent = ` ${event.opponents[0]}`;
+        opponent2.textContent = ` ${event.opponents[1]}`;
       } else {
         hexagon.innerHTML = `
           <span class="hexagon-text">${event.date}</span>
@@ -50,6 +84,9 @@ document.addEventListener('DOMContentLoaded', function () {
       hexagon.addEventListener('click', () => setActiveHexagon(index));
       container.appendChild(hexagon);
     });
+    // Добавляем соперников после рендеринга гексагонов
+    container.appendChild(opponent1);
+    container.appendChild(opponent2);
   }
 
   // Перемещения активного гексагона в центр
@@ -74,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Обработчик скролла
-  container.addEventListener('wheel', (e) => {
+  container.addEventListener('wheel', e => {
     const direction = e.deltaY > 0 ? 1 : -1;
     scrollHexagons(direction);
   });

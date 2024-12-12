@@ -1,4 +1,5 @@
 body {
+  position: relative;
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -68,12 +69,47 @@ nav a {
   text-decoration: none;
   color: white;
   &:hover {
-    transition: 500ms;
+    transition: 0.5s;
     transform: scale(1.2);
     color: #1c1e45;
     border-radius: 20%;
     background-color: white;
   }
+  /* Иконка двери */
+  .door-icon {
+    margin-left: 5px;
+    font-size: 22px;
+  }
+}
+
+ /* Стили для бургер-меню */
+ .burger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 30px;
+  height: 24px;
+}
+
+.burger-line {
+  background-color: white;
+  height: 2px;
+  width: 100%;
+}
+
+.burger-line:nth-child(1) {
+  width: 100%;
+}
+
+.burger-line:nth-child(2) {
+  width: 50%;
+  align-self: flex-end;
+}
+
+.burger-line:nth-child(3) {
+  width: 70%;
+  align-self: flex-end;
 }
 
 main {
@@ -87,6 +123,7 @@ main {
   justify-content: flex-start;
   align-items: center;
   padding-top: 80px;
+  overflow: hidden;
 }
 
 .hexagon-container {
@@ -94,7 +131,7 @@ main {
   display: grid;
   grid-template-columns: repeat(7, 1fr); /* 7 колонок */
   grid-template-rows: repeat(5, 100px); /* 5 строк */
-  gap: 20px;
+  /* gap: 20px; */
   width: 100%;
   max-width: 900px;
   height: 500px;
@@ -103,8 +140,31 @@ main {
   transition: all 0.5s;
 }
 
+/* Анимация для текста */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
 .hexagon {
-  /* position: absolute; */
+
   border-radius: 30px;
   width: 130px;
   height: 120px;
@@ -126,7 +186,6 @@ main {
 .hexagon:nth-child(1) {
   grid-column: 2;
   grid-row: 5;
-
 }
 .hexagon:nth-child(2) {
   grid-row: 4;
@@ -153,32 +212,15 @@ main {
   width: 180px;
   height: 180px;
   transform: scale(1.2);
-  /* grid-column: 4;
-  grid-row: 3;
-   */
-   z-index: 10;
-
+  animation: fadeIn 0.8s forwards;
 }
 
-.hexagon.large {
-  width: 150px;
-  height: 130px;
+.hexagon-text {
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  animation: fadeOut 0.3s forwards, fadeIn 0.3s forwards 0.3s;
 }
-
-.hexagon-wide {
-  width: auto;
-  height: 100px;
-  background-color: white;
-  color: #1c1e45;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 14px;
-  padding: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
 .hexagon-button {
   height: 35px;
   margin-top: 10px;
@@ -188,6 +230,7 @@ main {
   border-radius: 10px;
   color: #1c1e45;
   cursor: pointer;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .hexagon-button:hover {
@@ -195,8 +238,54 @@ main {
   color: #1c1e45;
 }
 
-.date{
+.date {
+  font-size: 20px;
   font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out forwards;
 }
 
+.opp-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+#opponent1,
+#opponent2 {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 450px;
+  height: 100px;
+  background-color: white;
+  color: #1c1e45;
+  text-align: center;
+  line-height: 60px;
+  font-size: 30px;
+  font-weight: bold;
+  transition: transform 0.5s ease, left 0.5s ease, right 0.5s ease, width 0.5s ease, height 0.5s ease;
+  transition: 0.7s;
+}
+
+#opponent1 {
+  width: calc(50% + 40px);
+  top: 45%;
+  left: -15%;
+  margin-right: 40px;
+  transform: translate(0, -50%);
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+}
+
+#opponent2 {
+  width: calc(50% + 40px);
+  top: 70%;
+  right: -15%;
+  transform: translate(0, -50%);
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+}
 
